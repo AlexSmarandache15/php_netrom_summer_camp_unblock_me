@@ -44,12 +44,18 @@ class HomeController extends AbstractController
     public function blcokedMe(Request $request, LicensePlateRepository $licensePlate, MailerService $mailer): Response
     {
         $activity = new Activity();
-        $form = $this->createForm(BlockeeType::class, $activity);
         $blockedCars = $licensePlate->findBy(['user'=>$this->getUser()]);
         if (count($blockedCars) == 0) {
-            $form->add('blockee', TextType::class, ['disabled'=>true]);
+            $this->addFlash (
+                'warning',
+                "You must enter at least one vehicle for this functionality !"
+            );
+
+            return $this->redirectToRoute('home');
         }
-        else if(count($blockedCars) == 1)
+        $form = $this->createForm(BlockeeType::class, $activity);
+
+        if(count($blockedCars) == 1)
         {
             $activity->setBlockee($blockedCars[0]);
             $form->add('blockee', TextType::class, ['disabled'=>true]);
@@ -114,12 +120,18 @@ class HomeController extends AbstractController
     public function blockedSomeone(Request $request, LicensePlateRepository $licensePlate, MailerService $mailer): Response
     {
         $activity = new Activity();
-        $form = $this->createForm(BlockerType::class, $activity);
         $blockedCars = $licensePlate->findBy(['user'=>$this->getUser()]);
         if (count($blockedCars) == 0) {
-            $form->add('blocker', TextType::class, ['disabled'=>true]);
+            $this->addFlash (
+                'warning',
+                "You must enter at least one vehicle for this functionality !"
+            );
+
+            return $this->redirectToRoute('home');
         }
-        else if(count($blockedCars) == 1)
+        $form = $this->createForm(BlockerType::class, $activity);
+
+        if(count($blockedCars) == 1)
         {
             $activity->setBlocker($blockedCars[0]);
             $form->add('blocker', TextType::class, ['disabled'=>true]);
