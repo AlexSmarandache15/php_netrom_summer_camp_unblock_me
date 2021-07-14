@@ -19,9 +19,8 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ license_plate.licensePlate }}</td>
                 <td>
-                    <a href="{{ path('license_plate_show', {'id': license_plate.id}) }}">show</a>
-                    <a href="{{ path('license_plate_edit', {'id': license_plate.id}) }}">edit</a>
-                    <a href="{{ path('license_plate_delete', {'id': license_plate.id}) }}">delete</a>
+                    <a class="btn btn-warning" href="{{ path('license_plate_edit', {'id': license_plate.id}) }}">Edit</a>
+                    <a class="btn btn-warning" href="{{ path('license_plate_delete', {'id': license_plate.id}) }}">Delete</a>
                 </td>
             </tr>
         {% else %}
