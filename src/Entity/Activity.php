@@ -35,7 +35,7 @@ class Activity
      *
      * @ORM\Column(name="status", type="integer", nullable=false)
      */
-    private $status = '0';
+    private $status = '1';
 
     /**
      * @return string
