@@ -3,14 +3,14 @@
 {% block title %}LicensePlate index{% endblock %}
 
 {% block body %}
-    <h1>LicensePlate index</h1>
+    <h1>Vehicles: </h1>
 
-    <table class="table">
+    <table class="table table-sm">
         <thead>
         <tr>
             <th>Id</th>
             <th>License_plate</th>
-            <th>actions</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +31,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <button onclick="location.href='/license/plate/new'" type="button">Add a car!</button>
-    <a href="{{ path('home') }}">Back to Home</a>
+    <button onclick="location.href='/license/plate/new'" type="button" class="btn btn-success">Add a new vehicle</button>
+    <a href="{{ path('home') }}"><p>Back to Home</a>
 {% endblock %}

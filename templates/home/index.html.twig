@@ -1,47 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
     <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-        li {
-            margin-bottom: 10px;
-        }
-
-        li:last-child {
-            margin-bottom: 0px;
-        }
-
-        ul {
-            padding: 1px;
-            padding-left: 40px;
-        }
-
-        h4 {
-            margin-bottom: 60px;
-            margin-top: 25px;
+        .example-wrapper code { background: #FFFFFF; padding: 2px 6px; }
+        .btn-warning {
+            color: #FFFFFF;
         }
     </style>
 
-    <div class="example-wrapper">
-        <h1>Hello, {{ app.user.username }}! ✅</h1>
-        <h4>Thank you for using our products !:)</h4>
-        <p>Options: </p>
-        <ul>
-            <li>
-                <button onclick="location.href='/license/plate'" type="button" >My vehicles</button>
-            </li>
-            <li>
-                <button onclick="location.href='blockee'" type="button">Someone blocked me</button>
-            </li>
-            <li>
-                <button onclick="location.href='blocker'" type="button">I have blocked someone</button>
-            </li>
-            <li>
-                <button onclick="location.href='password'" type="button">I forgot my password</button>
-            </li>
-        </ul>
+    <div class="text-center">
+        <div class="btn-group-vertical">
+            <a class="btn btn-primary btn-lg" href="{{ path('license_plate_index') }}">My vehicles</a>
+            <br>
+            <a class="btn btn-warning btn-lg" href="{{ path('blocker') }}">I have blocked somebody</a>
+            <br>
+            <a class="btn btn-danger btn-lg" href="{{ path('blockee') }}">Somebody blocked me</a>
+        </div>
     </div>
+
+    <footer>
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: #FFFFFF;">
+            © 2021 Copyright:
+            <a class="text-reset fw-bold" href="https://www.facebook.com/alex.smarandache.15/">Alex Smarandache</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
 {% endblock %}

@@ -13,7 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 
 #[Route('/license/plate')]
@@ -43,7 +42,6 @@ class LicensePlateController extends AbstractController
             $licensePlate->setLicensePlate((new UnicodeString($licensePlate->getLicensePlate()))->camel()->upper());
 
             $hasUser = $repo->findOneBy(['license_plate'=>$licensePlate->getLicensePlate()]);
-
             if($hasUser and !$hasUser->getUser())
             {
                 $entityManager = $this->getDoctrine()->getManager();
@@ -52,7 +50,6 @@ class LicensePlateController extends AbstractController
                 $entityManager->flush();
                 $blocker = $activity->whoBlockedMe($licensePlate->getLicensePlate());
                 $blockee = $activity->iveBlockedSomebody($licensePlate->getLicensePlate());
-
                 if($blocker)
                 {
                     $mid = $repo->findOneBy(['license_plate'=>$blocker]);
@@ -63,15 +60,11 @@ class LicensePlateController extends AbstractController
                         $message
                     );
                 }
-
                 if($blockee)
                 {
                     $mid = $repo->findOneBy(['license_plate'=>$blockee]);
-
                     $mailer->sendBlockerReport($mid->getUser(), $hasUser->getUser(), $mid->getLicensePlate());
-
                     $message="You blocked the car ".$mid->getLicensePlate()."!";
-
                     $this->addFlash(
                         'danger',
                         $message
@@ -115,7 +108,6 @@ class LicensePlateController extends AbstractController
         $message = "The vehicle ".$licensePlate->getLicensePlate()." has been changed to ";
         $form = $this->createForm(LicensePlateType::class, $licensePlate);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $licensePlate->setLicensePlate((new UnicodeString($licensePlate->getLicensePlate()))->camel()->upper());
             $message = $message . $licensePlate->getLicensePlate();
@@ -144,6 +136,6 @@ class LicensePlateController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('license_plate_index');
+        return $this->redirectToRoute('home');
     }
 }

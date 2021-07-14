@@ -2,9 +2,7 @@
 
 namespace App\Service;
 
-use App\Entity\LicensePlate;
 use App\Entity\User;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -91,6 +89,27 @@ class MailerService
             ->context([
                 'blockee' => $blockee->getUserIdentifier(),
                 'blockee_lp' => $license_plate,
+            ]);
+
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @param User $user
+     * @param string $password
+     * @throws TransportExceptionInterface
+     */
+    public function sendNewPasswordEmail(User $user, string $password)
+    {
+        $email = (new TemplatedEmail())
+            ->from('info@unblockme.com')
+            ->to($user->getUserIdentifier())
+            ->subject('password changed successfully!')
+            ->htmlTemplate('mailer/new_password.html.twig')
+
+            ->context([
+                'username' => $user->getUserIdentifier(),
+                'password' => $password,
             ]);
 
         $this->mailer->send($email);

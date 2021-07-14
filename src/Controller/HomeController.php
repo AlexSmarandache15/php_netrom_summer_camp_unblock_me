@@ -194,7 +194,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/password', name: 'password_new', methods: ['GET', 'POST'])]
-    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, SecurityController $security) : Response
+    public function changePassword(Request $request, UserPasswordHasherInterface $passwordHasher, MailerService $mailer) : Response
     {
         $user = new User();
 
@@ -269,6 +269,8 @@ class HomeController extends AbstractController
                 'success',
                 "The password has been successfully changed!"
             );
+
+            $mailer->sendNewPasswordEmail($user, $newPassword);
 
             return $this->redirectToRoute('home');
         }
