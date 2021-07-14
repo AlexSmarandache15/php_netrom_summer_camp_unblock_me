@@ -21,33 +21,24 @@ class ActivityRepository extends ServiceEntityRepository
         parent::__construct($registry, Activity::class);
     }
 
-    /**
-     * @param $value
-     * @return array Returns an Activity object
-     * @throws NonUniqueResultException
-     */
-    public function findByBlockee($value): ?Activity
+
+    public function findByBlockee($value): ?array
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.blockee = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->execute()
             ;
     }
 
-    /**
-     * @param $value
-     * @return array Returns an Activity object
-     * @throws NonUniqueResultException
-     */
-    public function findByBlocker($value): ?Activity
+    public function findByBlocker($value): ?array
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.blocker = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->execute()
             ;
     }
 

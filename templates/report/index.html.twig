@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper code { background: #FFFFFF; padding: 2px 6px; }
+        .btn-warning {
+            color: #FFFFFF;
+        }
+    </style>
+
+    <div class="text-center">
+        <div class="btn-group-vertical">
+            <a class="btn btn-warning btn-lg" href="{{ path('blocker') }}">I have blocked somebody</a>
+            <br>
+            <a class="btn btn-danger btn-lg" href="{{ path('blockee') }}">Somebody blocked me</a>
+        </div>
+        <br>
+        <br>
+        <a class="btn btn-success" href="{{ path('home') }}">Back to Home</a>
+        <a class="btn btn-success" href="{{ path('activity') }}">See ongoing activities</a>
+    </div>
+
+{% endblock %}

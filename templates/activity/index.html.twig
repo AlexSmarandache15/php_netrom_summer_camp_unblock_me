@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Report Activity{% endblock %}
+
+{% block body %}
+
+    <div class="text-center" style="max-width: 600px;margin:auto">
+        <h1 style="color: cornflowerblue">
+            Activities:
+        </h1>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Blocker</th>
+                <th>Blockee</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for activity in activeActivities %}
+            <tr class="text-center">
+                <td> <a class="btn btn-warning">{{ activity.blocker }}</a></td>
+
+                <td> <a class="btn btn-warning">{{ activity.blockee }}</a></td>
+
+                <td>
+                    <a class="btn btn-primary" href="{{ path('delete_activity', {'blocker': activity.blocker, 'blockee': activity.blockee}) }}">
+                        Delete
+                    </a></td>
+            </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button onclick="location.href='/report'" type="button" class="btn btn-success">Add a new report</button>
+        <a class="btn btn-success" href="{{ path('home') }}">Back to Home</a>
+
+    </div>
+{% endblock %}

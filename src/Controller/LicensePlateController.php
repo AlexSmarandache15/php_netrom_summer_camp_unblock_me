@@ -129,17 +129,31 @@ class LicensePlateController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'license_plate_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, LicensePlate $licensePlate): Response
+    public function delete(Request $request, LicensePlate $licensePlate,  ActivityService $activityService): Response
     {
+        $varLicensePlate = $licensePlate->getLicensePlate();
+        $myBlockees = $activityService->iHaveBlockedSomeone($varLicensePlate);
+        $myBlockers = $activityService->iWasBlocked($varLicensePlate);
+
+        if($myBlockees != null or $myBlockers != null)
+        {
+            $this->addFlash(
+                'warning',
+                'You cannot delete your license plate because it is a part of an activity report!'
+            );
+            return $this->redirectToRoute('license_plate_index');
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($licensePlate);
         $entityManager->flush();
-        $message = 'The vehicle ' . $licensePlate->getLicensePlate() . ' has been removed from your account!';
+
+        $message = 'The license plate ' . $licensePlate->getLicensePlate() . ' was deleted!';
         $this->addFlash(
             'success',
             $message
         );
+
         return $this->redirectToRoute('license_plate_index');
     }
 }

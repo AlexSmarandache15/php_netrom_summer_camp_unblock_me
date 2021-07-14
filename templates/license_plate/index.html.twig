@@ -8,24 +8,28 @@
     <table class="table table-sm">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>License_plate</th>
+            <th>ID</th>
+            <th>License Plate</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for license_plate in license_plates %}
             <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ license_plate.licensePlate }}</td>
                 <td>
-                    <a class="btn btn-warning" href="{{ path('license_plate_edit', {'id': license_plate.id}) }}">Edit</a>
-                    <a class="btn btn-warning" href="{{ path('license_plate_delete', {'id': license_plate.id}) }}">Delete</a>
+                    <a class="btn btn-warning">{{ loop.index }}</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning"> {{ license_plate.licensePlate }} </a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('license_plate_edit', {'id': license_plate.id}) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ path('license_plate_delete', {'id': license_plate.id}) }}">Delete</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">No records found</td>
             </tr>
         {% endfor %}
         </tbody>

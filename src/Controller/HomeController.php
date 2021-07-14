@@ -34,6 +34,17 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/report', name: 'report', methods: ['GET', 'POST'])]
+    public function report(Request $request): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->render('report/index.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
     #[Route('/mycars', name: 'mycars', methods: ['GET'])]
     public function showMyCars(): Response
     {

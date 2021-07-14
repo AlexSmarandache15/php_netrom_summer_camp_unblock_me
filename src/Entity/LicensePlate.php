@@ -56,6 +56,11 @@ class LicensePlate
         return $this;
     }
 
+    public function hasUser(): ?User
+    {
+        return $this->getUser() ?: null;
+    }
+
     public function __toString(): string
     {
         return $this->license_plate;
