@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 #[Route('/license/plate')]
@@ -127,15 +128,18 @@ class LicensePlateController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'license_plate_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'license_plate_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, LicensePlate $licensePlate): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$licensePlate->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($licensePlate);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('home');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($licensePlate);
+        $entityManager->flush();
+        $message = 'The vehicle ' . $licensePlate->getLicensePlate() . ' has been removed from your account!';
+        $this->addFlash(
+            'success',
+            $message
+        );
+        return $this->redirectToRoute('license_plate_index');
     }
 }
